@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Dialog from "./Dialogue/Dialog";
+import * as React from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [isVisible, setIsVisible] = React.useState();
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <button onClick={() => setIsVisible((prev) => !prev)}>open modal</button>
+      <Dialog isVisible={isVisible} setIsVisible={setIsVisible}>
+        <div>
+          我看到了问题所在。在你的代码中，textarea 的高度设置为 height:
+          "100%"，但它的父容器 .modal-content 没有明确的高度，所以 textarea
+          无法正确展开。另外，你设置了 .modal-content 的 max-height:
+          60vh，这会限制其最大高度。 我来解释一下为什么 modal 没有随着 textarea
+          内容增加而变长，并提供解决方案。
+        </div>
+      </Dialog>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

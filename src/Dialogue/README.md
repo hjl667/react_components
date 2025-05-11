@@ -1,0 +1,6 @@
+- overlay
+- outside click
+- Scroll lock
+- focus trap
+- callback function for close action
+- decoupled with context
