@@ -1,5 +1,5 @@
 import "./App.css";
-import Dialog from "./components/Dialogue/Dialog";
+import Dialog from "./ui/dialogue/Dialog";
 import * as React from "react";
 
 function App() {
