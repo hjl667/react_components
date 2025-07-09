@@ -34,7 +34,14 @@ export default function Accordion({ sections }: AccordionProps) {
               }}
             >
               {title}
-              <span className="accordion-icon" id="arrow">^</span>
+              <span
+                className={[
+                  "accordion-icon",
+                  isExpanded && "accordion-icon--rotated",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              />
             </button>
             <div className="accordion-item-contents" hidden={!isExpanded}>
               {contents}

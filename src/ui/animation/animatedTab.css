@@ -1,0 +1,26 @@
+.tabContainer {
+    width: 100px;
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    border: 0.5px solid grey;
+    padding: 3px;
+    cursor: pointer;
+  }
+  
+  .hover {
+    animation: shake-rotate 0.9s infinite ease-in-out;
+  }
+  
+  @keyframes shake-rotate {
+    25% {
+      transform: rotate(-15deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+    75% {
+      transform: rotate(-15deg);
+    }
+  }
+  
