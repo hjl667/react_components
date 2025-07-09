@@ -1,12 +1,14 @@
-const deepClone = (obj) => {
-  if (obj === null || typeof obj !== "object") return obj;
-  if (obj instanceof Date) return new Date(obj);
-  if (obj instanceof Array) return obj.map((item) => deepClone(item));
-  if (typeof obj === "object") {
-    const cloned = {};
-    Object.keys(obj).forEach((key) => {
-      cloned[key] = deepClone(obj[key]);
-    });
-    return cloned;
+//edge case: type of null is object
+
+const deepCloneUtil = <T>(obj: T): T => {
+  if(obj === null || typeof obj !== "object") return obj;
+  if(obj instanceof Array) return obj.map(item => deepCloneUtil(item)) as T;
+  if(typeof obj === 'object'){
+    const cloned = {} as T;;
+    Object.keys(obj).forEach((key)=>{
+      (cloned as any)[key] = deepCloneUtil((obj as any)[key]);
+    })
+    return cloned
   }
-};
+  return obj;
+}

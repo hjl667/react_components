@@ -1,7 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Accordion({ sections }) {
-  const [openSections, setOpenSections] = useState(new Set());
+// 定义accordion section的接口
+interface AccordionSection {
+  value: string;
+  title: string;
+  contents: React.ReactNode;
+}
+
+// 定义Accordion组件的props接口
+interface AccordionProps {
+  sections: AccordionSection[];
+}
+
+export default function Accordion({ sections }: AccordionProps) {
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
 
   return (
     <div className="accordion">
@@ -22,15 +34,7 @@ export default function Accordion({ sections }) {
               }}
             >
               {title}
-              <span
-                aria-hidden={true}
-                className={[
-                  "accordion-icon",
-                  isExpanded && "accordion-icon--rotated",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              />
+              <span className="accordion-icon" id="arrow">^</span>
             </button>
             <div className="accordion-item-contents" hidden={!isExpanded}>
               {contents}

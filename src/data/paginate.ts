@@ -1,5 +1,7 @@
 // 8.5 分页处理
-const paginate = (array, pageSize, pageNumber) => {
+const paginate = (array: T[], pageSize: number, pageNumber: number): T[] => {
   const startIndex = (pageNumber - 1) * pageSize;
   return array.slice(startIndex, startIndex + pageSize);
 };
+
+export default paginate;
