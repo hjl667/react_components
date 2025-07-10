@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreditCardForm from "./creditCard";
+import CreditCardForm from "./employeeForm";
 
 const TEST_IDS = {
   cardNumberInput: "cardNumberInput",

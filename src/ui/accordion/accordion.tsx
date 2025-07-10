@@ -1,54 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 
-// 定义accordion section的接口
-interface AccordionSection {
+import "./accrodion.css";
+
+
+// icon change animation
+ 
+interface Section {
   value: string;
   title: string;
-  contents: React.ReactNode;
+  contents: string;
 }
 
-// 定义Accordion组件的props接口
 interface AccordionProps {
-  sections: AccordionSection[];
+  sections: Section[]
 }
 
-export default function Accordion({ sections }: AccordionProps) {
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+const Accordion = ({sections}: AccordionProps) => {
+  const [openSections, setOpenSections] = React.useState<Set<string>>(new Set());
+  const handleClick = (value: string) => {
+    const openSectionsCopy = new Set(openSections);
+    if (openSectionsCopy.has(value)) {
+      openSectionsCopy.delete(value);
+    } else {
+      openSectionsCopy.add(value);
+    }
+    setOpenSections(openSectionsCopy);
+  }
 
   return (
     <div className="accordion">
-      {sections.map(({ value, title, contents }) => {
-        const isExpanded = openSections.has(value);
-
+      {sections.map(({title, contents, value})=>{
+        const isOpen = openSections.has(value);
         return (
-          <div className="accordion-item" key={value}>
-            <button
-              className="accordion-item-title"
-              type="button"
-              onClick={() => {
-                const newOpenSections = new Set(openSections);
-                newOpenSections.has(value)
-                  ? newOpenSections.delete(value)
-                  : newOpenSections.add(value);
-                setOpenSections(newOpenSections);
-              }}
-            >
+          <div className="accordion-item">
+            <button className="accordion-item-title" onClick={() => handleClick(value)}>
               {title}
-              <span
-                className={[
-                  "accordion-icon",
-                  isExpanded && "accordion-icon--rotated",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              />
+              <span className={`accordion-item-icon${isOpen ? " accordion-item-icon-rotated" : ""}`}>^</span>
             </button>
-            <div className="accordion-item-contents" hidden={!isExpanded}>
-              {contents}
-            </div>
+            {isOpen && <div className="accordion-item-contents">{contents}</div>}
           </div>
-        );
+        )
       })}
     </div>
-  );
+  )
 }
+
+export default Accordion;
