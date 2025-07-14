@@ -1,129 +1,78 @@
 import { useState } from 'react';
+import users from './data/users';
+import React from 'react';
+import './styles.css';
 
-export type SortDirection = 'asc' | 'desc';
-type ColumnDef<T> = Readonly<{
-  label: string;
-  key: string;
-  renderCell: (row: T) => React.ReactNode;
-  comparator: (
-    a: T,
-    b: T,
-    sortDirection: SortDirection,
-  ) => number;
-  filterType: 'string' | 'range' | null;
-}>;
-export type Columns<T> = ReadonlyArray<ColumnDef<T>>;
+type SortField = 'id' | 'name' | 'age' | 'occupation';
+type SortDirection = 'asc' | 'desc';
+type User = (typeof users)[number];
 
-function filterData<T>(data: Array<T>, filters: Filters) {
-  return data.filter((row) =>
-    Object.entries(filters)
-      .map(([key, filterPayload]) => {
-        // Note: Admittedly this is not-typesafe.
-        const value = (row as any)[key];
+const columns = [
+  { label: 'ID', key: 'id' },
+  { label: 'Name', key: 'name' },
+  { label: 'Age', key: 'age' },
+  { label: 'Occupation', key: 'occupation' },
+] as const;
 
-        switch (filterPayload.type) {
-          case 'string': {
-            if (
-              filterPayload.value == null ||
-              filterPayload.value === ''
-            ) {
-              return true;
-            }
-
-            return (
-              (value as string)
-                .toLocaleLowerCase()
-                .indexOf(
-                  filterPayload.value.toLocaleLowerCase(),
-                ) !== -1
-            );
-          }
-          case 'range': {
-            // Smaller than min value.
-            if (
-              filterPayload.min != null &&
-              value < filterPayload.min
-            ) {
-              return false;
-            }
-
-            // Larger than max value.
-            if (
-              filterPayload.max != null &&
-              value > filterPayload.max
-            ) {
-              return false;
-            }
-
-            return true;
-          }
-        }
-      })
-      .every((result) => result),
-  );
-}
-
-function sortData<T>(
-  data: Array<T>,
-  columns: Columns<T>,
-  field: string | null,
+function sortUsers(
+  usersList: Array<User>,
+  field: SortField | null,
   direction: SortDirection,
 ) {
-  const dataClone = data.slice();
-  const comparator = columns.find(
-    (column) => column.key === field,
-  )?.comparator;
+  const usersClone = usersList.slice();
 
-  if (comparator == null) {
-    return dataClone;
+  switch (field) {
+    case 'id':
+    case 'age': {
+      return usersClone.sort((a, b) =>
+        direction === 'asc'
+          ? a[field] - b[field]
+          : b[field] - a[field],
+      );
+    }
+    case 'name':
+    case 'occupation': {
+      return usersClone.sort((a, b) =>
+        direction === 'asc'
+          ? a[field].localeCompare(b[field])
+          : b[field].localeCompare(a[field]),
+      );
+    }
+    default: {
+      return usersClone;
+    }
   }
-
-  return dataClone.sort((a, b) =>
-    comparator(a, b, direction),
-  );
 }
 
-function paginateData<T>(
-  data: Array<T>,
+function paginate(
+  usersList: Array<User>,
   page: number,
   pageSize: number,
 ) {
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
 
-  const pageData = data.slice(start, end);
-  const maxPages = Math.ceil(data.length / pageSize);
-  return { pageData, maxPages };
+  const pageUsers = usersList.slice(start, end);
+  const totalPages = Math.ceil(usersList.length / pageSize);
+  return { pageUsers, totalPages };
 }
 
-export default function DataTable<
-  T extends { id: number },
->({
-  data,
-  columns,
-}: Readonly<{
-  data: Array<T>;
-  columns: Columns<T>;
-}>) {
+export default function DataTable() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const [sortField, setSortField] = useState<string | null>(
-    null,
-  );
+
+  const [sortField, setSortField] =
+    useState<SortField | null>(null);
   const [sortDirection, setSortDirection] =
     useState<SortDirection>('asc');
-  const [filters, setFilters] = useState<Filters>({});
 
-  // Processing of data.
-  const filteredData = filterData(data, filters);
-  const sortedData = sortData(
-    filteredData,
-    columns,
+  const sortedUsers = sortUsers(
+    users,
     sortField,
     sortDirection,
   );
-  const { maxPages, pageData } = paginateData(
-    sortedData,
+  const { totalPages, pageUsers } = paginate(
+    sortedUsers,
     page,
     pageSize,
   );
@@ -133,7 +82,7 @@ export default function DataTable<
       <table>
         <thead>
           <tr>
-            {columns.map(({ label, key, filterType }) => (
+            {columns.map(({ label, key }) => (
               <th key={key}>
                 <button
                   onClick={() => {
@@ -151,36 +100,25 @@ export default function DataTable<
                   }}>
                   {label}
                 </button>
-                {/* Filter inputs */}
-                {filterType && (
-                  <HeaderFilterInput
-                    field={key}
-                    filterType={filterType}
-                    filters={filters}
-                    onFilterChange={(newFilters) => {
-                      setFilters(newFilters);
-                      setPage(1);
-                    }}
-                  />
-                )}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {pageData.map((item) => (
-            <tr key={item.id}>
-              {columns.map(({ key, renderCell }) => (
-                <td key={key}>{renderCell(item)}</td>
-              ))}
-            </tr>
-          ))}
+          {pageUsers.map(
+            ({ id, name, age, occupation }) => (
+              <tr key={id}>
+                <td>{id}</td>
+                <td>{name}</td>
+                <td>{age}</td>
+                <td>{occupation}</td>
+              </tr>
+            ),
+          )}
         </tbody>
       </table>
-      <hr />
       <div className="pagination">
         <select
-          aria-label="Page size"
           onChange={(event) => {
             setPageSize(Number(event.target.value));
             setPage(1);
@@ -199,15 +137,11 @@ export default function DataTable<
             }}>
             Prev
           </button>
-          {maxPages === 0 ? (
-            <span>0 pages</span>
-          ) : (
-            <span aria-label="Page number">
-              Page {page} of {maxPages}
-            </span>
-          )}
+          <span>
+            Page {page} of {totalPages}
+          </span>
           <button
-            disabled={page === maxPages}
+            disabled={page === totalPages}
             onClick={() => {
               setPage(page + 1);
             }}>
@@ -215,10 +149,6 @@ export default function DataTable<
           </button>
         </div>
       </div>
-      {/* Filters state to help visualize */}
-      <pre className="filter__debug">
-        {JSON.stringify(filters, null, 2)}
-      </pre>
     </div>
   );
 }

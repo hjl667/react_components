@@ -42,7 +42,7 @@
 input[type="text"],
 input[type="email"],
 input[type="tel"],
-select {
+.employee-form select {
   width: 100%;
   padding: 12px 16px;
   border: 2px solid #e1e5e9;
@@ -55,7 +55,7 @@ select {
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
-select:focus {
+.employee-form select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
@@ -64,18 +64,13 @@ select:focus {
 input[type="text"]:hover,
 input[type="email"]:hover,
 input[type="tel"]:hover,
-select:hover {
+.employee-form select:hover {
   border-color: #007bff;
 }
 
-/* Placeholder styling */
-input::placeholder {
-  color: #6c757d;
-  opacity: 0.7;
-}
 
 /* Select dropdown styling */
-select {
+.employee-form select {
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -134,19 +129,4 @@ button[data-testid="submitButton"]:active:not(:disabled) {
   color: #495057;
   margin-bottom: 8px;
   font-size: 14px;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .employee-form {
-    margin: 20px;
-    padding: 20px;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  select {
-    font-size: 16px; /* Prevents zoom on iOS */
-  }
 }

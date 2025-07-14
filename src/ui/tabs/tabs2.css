@@ -1,0 +1,30 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tabs-list {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tabs-list-item {
+    background: none;
+    border: none;
+    padding: 9px;
+}
+
+.tabs-list-item-label {
+    padding: 3px;
+}
+
+.tabs-list-item-label:hover {
+    background-color:  rgba(0, 0, 0, 0.05);
+}
+
+.tabs-list-item--active {
+    border-bottom: 1px solid blue;
+    color: blue;
+}

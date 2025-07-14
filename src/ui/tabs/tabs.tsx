@@ -1,6 +1,19 @@
+import React from "react";
 import { useState } from "react";
+import "./tabs2.css";
 
-export default function Tabs({ defaultValue, items }) {
+interface TabItem {
+  label: string;
+  value: string;
+  panel: React.ReactNode;
+}
+
+interface TabsProps {
+  defaultValue: string;
+  items: TabItem[];
+}
+
+const Tabs: React.FC<TabsProps> =({ defaultValue, items }) => {
   const [value, setValue] = useState(defaultValue ?? items[0].value);
 
   return (
@@ -8,22 +21,17 @@ export default function Tabs({ defaultValue, items }) {
       <div className="tabs-list">
         {items.map(({ label, value: itemValue }) => {
           const isActiveValue = itemValue === value;
-
           return (
             <button
               key={itemValue}
               type="button"
-              className={[
-                "tabs-list-item",
-                isActiveValue && "tabs-list-item--active",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              className={
+                `tabs-list-item ${isActiveValue ? "tabs-list-item--active" : ""}`}
               onClick={() => {
                 setValue(itemValue);
               }}
             >
-              {label}
+              <span className="tabs-list-item-label">{label}</span>
             </button>
           );
         })}
@@ -38,3 +46,5 @@ export default function Tabs({ defaultValue, items }) {
     </div>
   );
 }
+
+export default Tabs;
