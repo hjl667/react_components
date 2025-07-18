@@ -1,35 +1,30 @@
 import { useState } from "react";
 import "./styles.css";
+import React from "react";
 
-const CalculatorUI = ({ display, buttons, handleClick }) => {
+interface CalculatorProps {
+  display: number;
+  buttons: string[];
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const Calculator: React.FC<CalculatorProps> = ({display, buttons, handleClick}) => {
   return (
-    <div style={{ width: "250px", border: "1px solid black", padding: "10px" }}>
-      <div>{display}</div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "10px",
-        }}
-      >
-        {buttons.map((button, index) => (
-          <button
-            onClick={(event) => handleClick(event)}
-            className={`${button === "0" ? "zero" : ""} ${
-              ["x", "-", "+", "="].includes(button) ? "orange" : ""
-            }`}
-            value={button}
-            key={index}
-          >
-            {button}
-          </button>
-        ))}
+    <div className="calculator">
+      <div className="calculator-display">{display}</div>
+      <div className="calculator-buttons">
+        {
+          buttons.map((button, index)=>
+            <button className={`calculator-button ${button == '=' ? 'equal-button' : ''}`} onClick={(e)=>handleClick(e)} key={index} value={button}>
+              {button}
+              </button>)
+        }
       </div>
     </div>
-  );
-};
+  )
+}
 
-const Calculator = () => {
+const CalculatorContainer = () => {
   const buttons = [
     "7",
     "8",
@@ -53,18 +48,17 @@ const Calculator = () => {
   const [prev, setPrev] = useState(0);
   const [operator, setOperator] = useState("");
 
-  const handleClick = (event) => {
-    const btnValue = event.target.value;
-    if (!isNaN(btnValue)) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const btnValue = (event.target as HTMLButtonElement).value;
+    if (!isNaN(Number(btnValue))) {
       const digit = parseInt(btnValue);
       if (overwrite) {
-        setDisplay(btnValue);
+        setDisplay(Number(btnValue));
         setOverwrite(false);
       } else {
         setDisplay((prev) => prev * 10 + digit);
       }
     } else {
-      console.log("not a number");
       if (btnValue !== "=") {
         setOperator(btnValue);
         setOverwrite(true);
@@ -86,14 +80,12 @@ const Calculator = () => {
   };
 
   return (
-    <div>
-      <CalculatorUI
-        display={display}
-        buttons={buttons}
-        handleClick={handleClick}
+    <Calculator
+      display={display}
+      buttons={buttons}
+      handleClick={handleClick}
       />
-    </div>
-  );
+  );  
 };
 
-export default Calculator;
+export default CalculatorContainer;

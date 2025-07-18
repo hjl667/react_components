@@ -1,0 +1,25 @@
+.calculator {
+    border: 1px solid black;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+}
+
+.calculator-display {
+    background-color: #f0f0f0;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.calculator-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.equal-button{
+    grid-column: span 2;
+}

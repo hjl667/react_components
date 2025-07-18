@@ -168,7 +168,7 @@ const EmployeeForm = () => {
 
   return (
     <div className="employee-form">
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <input
           type="text"
           name="employeeId"
@@ -185,7 +185,7 @@ const EmployeeForm = () => {
         )}
       </div>
 
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <input
           type="text"
           name="firstName"
@@ -202,7 +202,7 @@ const EmployeeForm = () => {
         )}
       </div>
 
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <input
           type="text"
           name="lastName"
@@ -219,7 +219,7 @@ const EmployeeForm = () => {
         )}
       </div>
 
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <input
           type="email"
           name="email"
@@ -236,7 +236,7 @@ const EmployeeForm = () => {
         )}
       </div>
 
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <input
           type="tel"
           name="phone"
@@ -253,7 +253,7 @@ const EmployeeForm = () => {
         )}
       </div>
 
-      <div className="layout-column mb-15">
+      <div className="form-item">
         <select
           name="department"
           value={formData.department}
@@ -277,7 +277,7 @@ const EmployeeForm = () => {
       </div>
 
       <button
-        data-testid="submitButton"
+        className="form-submit-button"
         onClick={handleSubmit}
         disabled={!isSubmitEnabled}
       >

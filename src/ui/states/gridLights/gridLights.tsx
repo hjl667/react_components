@@ -28,7 +28,7 @@ function Cell({ filled, label, onClick, isDisabled }) {
   );
 }
 
-export default function App() {
+export default function gridLights() {
   const [order, setOrder] = useState([]);
   const [isDeactivating, setIsDeactivating] = useState(false);
 

@@ -1,4 +1,6 @@
+import React from "react";
 import { useState } from "react";
+import "./styles.css";
 
 const TODAY = formatDate(new Date());
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
@@ -11,7 +13,7 @@ function formatDate(date) {
   return [year, month, day].join("-");
 }
 
-export default function App() {
+const FlightBooker = () => {
   const [flightOption, setFlightOption] = useState("one-way");
   const [departureDate, setDepartureDate] = useState(
     formatDate(new Date(Date.now() + DAY_IN_MILLISECONDS)) // Tomorrow.
@@ -67,4 +69,5 @@ export default function App() {
     </div>
   );
 }
-d
+
+export default FlightBooker;

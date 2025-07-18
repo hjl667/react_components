@@ -5,6 +5,8 @@ import CreditCardForm from "./ui/form/employee/employeeForm";
 import PokemonCard from "./ui/cards/pokemonCard/pokemonCard";
 import Tabs from "./ui/tabs/tabs";
 import DataTable from "./ui/table/DataTable";
+import FlightBooker from "./ui/flightbooker/flightBooker";
+import Calculator from "./ui/calculator/calculator";
 
 function App() {
   const sections = [
@@ -33,6 +35,8 @@ function App() {
       <PokemonCard isLoading={false} data={{url: "https://i.ebayimg.com/images/g/oVsAAOSwuQdm6-AQ/s-l1600.webp", name: "Pikachu"}} error={null} />
       <Tabs defaultValue="section1" items={tabs} />
       <DataTable/>
+      <FlightBooker/>
+      <Calculator/>
     </React.Fragment>
   );
 }
