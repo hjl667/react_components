@@ -1,5 +1,6 @@
 import "./App.css";
 import * as React from "react";
+import { images } from "./ui/carousel/images";
 import Accordion from "./ui/accordion/accordion";
 import CreditCardForm from "./ui/form/employee/employeeForm";
 import PokemonCard from "./ui/cards/pokemonCard/pokemonCard";
@@ -7,6 +8,13 @@ import Tabs from "./ui/tabs/tabs";
 import DataTable from "./ui/table/DataTable";
 import FlightBooker from "./ui/flightbooker/flightBooker";
 import Calculator from "./ui/calculator/calculator";
+import ProgressBarContainer from "./ui/effects/progressBar1/progress";
+import AnimatedTab from "./ui/animation/animatedTab";
+import ImageCarousel from "./ui/carousel/carousel";
+import Clock from "./ui/clock/clock";
+import Modal from "./ui/modal/modal";
+import GridLights from "./ui/states/gridLights/gridLights";
+import TicTacToe from "./ui/states/ticTacToe/ticTacToe";
 
 function App() {
   const sections = [
@@ -28,6 +36,7 @@ function App() {
       panel: <div>This is the content for section 2</div>,
     },
   ];
+  const [open, setOpen] = React.useState(true);
   return (
     <React.Fragment>
       <Accordion sections={sections} />
@@ -37,6 +46,14 @@ function App() {
       <DataTable/>
       <FlightBooker/>
       <Calculator/>
+      <ProgressBarContainer/>
+      <AnimatedTab/>
+      <ImageCarousel images={images}/>
+      <Clock/>
+      <button onClick={() => setOpen(true)}>Open Modal</button>
+      <Modal open={open} onClose={() => setOpen(false)}/>
+      <GridLights/>
+      <TicTacToe/>
     </React.Fragment>
   );
 }

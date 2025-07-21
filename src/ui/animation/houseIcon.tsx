@@ -1,4 +1,6 @@
-export default HouseIcon = () => (
+import React from 'react';
+
+const HouseIcon: React.FC = () => (
     <svg
       width="20"
       height="20"
@@ -16,3 +18,5 @@ export default HouseIcon = () => (
       />
     </svg>
   );
+
+export default HouseIcon;

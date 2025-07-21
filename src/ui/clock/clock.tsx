@@ -1,9 +1,10 @@
+import React from "react";
 import { useEffect, useState } from "react";
+import './styles.css'
 
 function Hand({ height = 1, width = 1, angle }) {
   return (
     <div
-      aria-hidden={true}
       className="clock-hand"
       style={{
         transform: `rotate(${angle}deg) scaleY(${height}) scaleX(${width})`,
@@ -28,10 +29,6 @@ function useCurrentDate() {
   }, []);
 
   return date;
-}
-
-function padTwoDigit(number) {
-  return number >= 10 ? String(number) : `0${number}`;
 }
 
 export default function Clock() {
@@ -60,14 +57,9 @@ function ClockImpl({ hours, minutes, seconds, size }) {
   const minutesAngle = minutesPercentage * FULL_ROTATION_DEGREES;
   const secondsAngle = secondsPercentage * FULL_ROTATION_DEGREES;
 
-  const dateTimeDisplay = `${padTwoDigit(hours)}:${padTwoDigit(
-    minutes
-  )}:${padTwoDigit(seconds)}`;
-
   return (
-    <time
+    <div
       className="clock"
-      dateTime={dateTimeDisplay}
       style={{
         "--size": `${size}px`,
       }}
@@ -75,6 +67,6 @@ function ClockImpl({ hours, minutes, seconds, size }) {
       <Hand height={0.5} angle={hourAngle} width={3} />
       <Hand height={0.9} angle={minutesAngle} width={2} />
       <Hand height={0.8} angle={secondsAngle} />
-    </time>
+    </div>
   );
 }

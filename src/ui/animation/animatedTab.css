@@ -9,7 +9,7 @@
   }
   
   .hover {
-    animation: shake-rotate 0.9s infinite ease-in-out;
+    animation: slide-in 0.9s infinite ease-in-out;
   }
   
   @keyframes shake-rotate {
@@ -21,6 +21,16 @@
     }
     75% {
       transform: rotate(-15deg);
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateX(0%);
+    }
+  
+    to {
+      transform: translateX(100%);
     }
   }
   

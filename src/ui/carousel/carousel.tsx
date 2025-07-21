@@ -1,15 +1,21 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
+import './styles.css'
 
 function clsx(...classnames: Array<any>) {
   return classnames.filter(Boolean).join(' ');
 }
 
-export default function ImageCarousel({
-  images,
-}: Readonly<{
-  images: ReadonlyArray<{ src: string; alt: string }>;
-}>) {
+interface Image {
+  src: string,
+  alt: string,
+}
+
+interface CarouselProps {
+  images: Image[];
+}
+
+const ImageCarousel: React.FC<Readonly<CarouselProps>> = ({ images }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [currIndex, setCurrIndex] = useState(0);
   const [imageWidth, setImageWidth] = useState<
@@ -52,7 +58,6 @@ export default function ImageCarousel({
           // Only add transition class when there is a need to
           // animate the transition, otherwise the translation update
           // is also transitioned when resizing the screen.
-          isTransitioning &&
             'image-carousel__row--transitioning',
         )}
         style={{
@@ -73,7 +78,6 @@ export default function ImageCarousel({
         ))}
       </div>
       <button
-        aria-label="Previous image"
         disabled={isTransitioning}
         className="image-carousel__button image-carousel__button--prev"
         onClick={() => {
@@ -110,3 +114,5 @@ export default function ImageCarousel({
     </div>
   );
 }
+
+export default ImageCarousel;

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import './styles.css';
+import React from "react";
 
 // List of cell indices that are 3-in-a-row.
 const CELLS_IN_A_LINE = [
@@ -39,7 +41,7 @@ function Cell({ index, disabled, mark, turn, onClick }) {
   );
 }
 
-export default function App() {
+export default function TicTacToe() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsPlaying, setIsXPlaying] = useState(true);
 

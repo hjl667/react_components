@@ -1,24 +1,24 @@
 import HouseIcon from "./houseIcon";
 import { useState } from "react";
 import "./animatedTab.css";
+import React from "react";
 
-const Title = () => {
-  return <div>{"great tab"}</div>;
-};
 
-export default AnimatedTab = () => {
-  [onHover, setOnHover] = useState(false);
+const AnimatedTab = () => {
+  const [onHover, setOnHover] = useState(false);
 
   return (
     <div
       className="tabContainer"
-      onMouseEnter={() => setOnHover(true)}
-      onMouseLeave={() => setOnHover(false)}
+      onMouseEnter={() => setOnHover(prev=>!prev)}
+      onMouseLeave={() => setOnHover(prev=>!prev)}
     >
       <div className={onHover ? "hover" : ""}>
         <HouseIcon />
       </div>
-      <Title />
+      <div>great tab</div>
     </div>
   );
 };
+
+export default AnimatedTab;
