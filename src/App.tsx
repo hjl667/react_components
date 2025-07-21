@@ -15,6 +15,8 @@ import Clock from "./ui/clock/clock";
 import Modal from "./ui/modal/modal";
 import GridLights from "./ui/states/gridLights/gridLights";
 import TicTacToe from "./ui/states/ticTacToe/ticTacToe";
+import FileExplorer from "./ui/directory/fileExplorer";
+import { data } from "./ui/directory/data";
 
 function App() {
   const sections = [
@@ -54,6 +56,7 @@ function App() {
       <Modal open={open} onClose={() => setOpen(false)}/>
       <GridLights/>
       <TicTacToe/>
+      <FileExplorer data={data}/>
     </React.Fragment>
   );
 }
