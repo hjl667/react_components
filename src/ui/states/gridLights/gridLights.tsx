@@ -1,6 +1,6 @@
 import { useState } from "react";
 import './styles.css';
-
+import React from "react";
 // Make it easy to visualize the board.
 // Customize the board rendering just by changing
 // this 2D array. Note that all rows have to
